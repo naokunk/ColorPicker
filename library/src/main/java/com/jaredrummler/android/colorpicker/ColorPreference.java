@@ -19,12 +19,12 @@ package com.jaredrummler.android.colorpicker;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.preference.Preference;
+import androidx.preference.Preference;
 import android.util.AttributeSet;
-import android.view.View;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.preference.PreferenceViewHolder;
 
 /**
  * A Preference to select a color
@@ -111,13 +111,13 @@ public class ColorPreference extends Preference implements ColorPickerDialogList
     }
   }
 
-  @Override protected void onAttachedToActivity() {
-    super.onAttachedToActivity();
-
+  @Override
+  public void onAttached() {
+    super.onAttached();
     if (showDialog) {
       FragmentActivity activity = (FragmentActivity) getContext();
       ColorPickerDialog fragment =
-          (ColorPickerDialog) activity.getSupportFragmentManager().findFragmentByTag(getFragmentTag());
+              (ColorPickerDialog) activity.getSupportFragmentManager().findFragmentByTag(getFragmentTag());
       if (fragment != null) {
         // re-bind preference to fragment
         fragment.setColorPickerDialogListener(this);
@@ -125,9 +125,10 @@ public class ColorPreference extends Preference implements ColorPickerDialogList
     }
   }
 
-  @Override protected void onBindView(View view) {
-    super.onBindView(view);
-    ColorPanelView preview = (ColorPanelView) view.findViewById(R.id.cpv_preference_preview_color_panel);
+  @Override
+  public void onBindViewHolder(PreferenceViewHolder holder) {
+    super.onBindViewHolder(holder);
+    ColorPanelView preview = (ColorPanelView) holder.itemView.findViewById(R.id.cpv_preference_preview_color_panel);
     if (preview != null) {
       preview.setColor(color);
     }
