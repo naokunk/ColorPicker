@@ -281,14 +281,7 @@ public class ColorPanelView extends View {
     getLocationOnScreen(screenPos);
     getWindowVisibleDisplayFrame(displayFrame);
     final Context context = getContext();
-    final int width = getWidth();
-    final int height = getHeight();
-    final int midy = screenPos[1] + height / 2;
-    int referenceX = screenPos[0] + width / 2;
-    if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_LTR) {
-      final int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
-      referenceX = screenWidth - referenceX; // mirror
-    }
+
     StringBuilder hint = new StringBuilder("#");
     if (Color.alpha(color) != 255) {
       hint.append(Integer.toHexString(color).toUpperCase(Locale.ENGLISH));
@@ -296,13 +289,6 @@ public class ColorPanelView extends View {
       hint.append(String.format("%06X", 0xFFFFFF & color).toUpperCase(Locale.ENGLISH));
     }
     Toast cheatSheet = Toast.makeText(context, hint.toString(), Toast.LENGTH_SHORT);
-    if (midy < displayFrame.height()) {
-      // Show along the top; follow action buttons
-      cheatSheet.setGravity(Gravity.TOP | GravityCompat.END, referenceX, screenPos[1] + height - displayFrame.top);
-    } else {
-      // Show along the bottom center
-      cheatSheet.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, height);
-    }
     cheatSheet.show();
   }
 }
