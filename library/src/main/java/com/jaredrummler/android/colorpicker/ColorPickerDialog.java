@@ -474,14 +474,16 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
     if (presets == null) presets = MATERIAL_COLORS;
     boolean isMaterialColors = presets == MATERIAL_COLORS;
     presets = Arrays.copyOf(presets, presets.length); // don't update the original array when modifying alpha
-    if (alpha != 255) {
-      // add alpha to the presets
-      for (int i = 0; i < presets.length; i++) {
-        int color = presets[i];
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
-        presets[i] = Color.argb(alpha, red, green, blue);
+    if(showAlphaSlider){
+      if (alpha != 255) {
+        // add alpha to the presets
+        for (int i = 0; i < presets.length; i++) {
+          int color = presets[i];
+          int red = Color.red(color);
+          int green = Color.green(color);
+          int blue = Color.blue(color);
+          presets[i] = Color.argb(alpha, red, green, blue);
+        }
       }
     }
     presets = unshiftIfNotExists(presets, color);
